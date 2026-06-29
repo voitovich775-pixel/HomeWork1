@@ -7,6 +7,17 @@ class Student:
         self.courses_in_progress = []
         self.grades = {}
 
+    def rate_lecturer(self, lecturer, course, grade):
+        if not isinstance(lecturer, Lecturer):
+            return 'Ошибка'
+        if course not in self.courses_in_progress or course not in lecturer.courses_attached:
+            return 'Ошибка'
+        if course in lecturer.grades:
+            lecturer.grades[course].append(grade)
+        else:
+            lecturer.grades[course] = [grade]
+        return None
+
 class Mentor:
     def __init__(self, name, surname):
         self.name = name
@@ -53,3 +64,18 @@ print(isinstance(lecturer, Mentor)) # True
 print(isinstance(reviewer, Mentor)) # True
 print(lecturer.courses_attached)    # []
 print(reviewer.courses_attached)    # []
+
+lecturer = Lecturer('Иван', 'Иванов')
+reviewer = Reviewer('Пётр', 'Петров')
+student = Student('Алёхина', 'Ольга', 'Ж')
+
+student.courses_in_progress += ['Python', 'Java']
+lecturer.courses_attached += ['Python', 'C++']
+reviewer.courses_attached += ['Python', 'C++']
+
+print(student.rate_lecturer(lecturer, 'Python', 7))   # None
+print(student.rate_lecturer(lecturer, 'Java', 8))     # Ошибка
+print(student.rate_lecturer(lecturer, 'С++', 8))      # Ошибка
+print(student.rate_lecturer(reviewer, 'Python', 6))   # Ошибка
+
+print(lecturer.grades)  # {'Python': [7]}
