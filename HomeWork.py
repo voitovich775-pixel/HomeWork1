@@ -213,3 +213,23 @@ print()
 print(lecturer)
 print()
 print(student)
+
+    def average_student_grade(students, course):
+        total = 0
+        count = 0
+        for student in students:
+            if course in student.grades:
+                grades = student.grades[course]
+                total += sum(grades)
+                count += len(grades)
+        return round(total / count, 1) if count else 0.0
+
+    def average_lecturer_grade(lecturers, course):
+        total = 0
+        count = 0
+        for lecturer in lecturers:
+            if course in lecturer.grades:
+                grades = lecturer.grades[course]
+                total += sum(grades)
+                count += len(grades)
+        return round(total / count, 1) if count else 0.0
